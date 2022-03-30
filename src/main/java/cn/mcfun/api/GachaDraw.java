@@ -17,6 +17,8 @@ import java.util.UUID;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import static cn.mcfun.Main.storyAdjustIds;
+
 public class GachaDraw {
     String gachaId;
     String svtId;
@@ -84,7 +86,7 @@ public class GachaDraw {
         List<BasicNameValuePair> params = new ArrayList();
         params.add(new BasicNameValuePair("gachaId", this.gachaId));
         params.add(new BasicNameValuePair("num", this.type));
-        params.add(new BasicNameValuePair("storyAdjustIds", "[]"));
+        params.add(new BasicNameValuePair("storyAdjustIds", storyAdjustIds));
         params.add(new BasicNameValuePair("userId", userInfo.getUserId()));
         params.add(new BasicNameValuePair("authKey", userInfo.getAuthKey()));
         params.add(new BasicNameValuePair("appVer", Main.appVer));

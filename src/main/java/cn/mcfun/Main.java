@@ -59,6 +59,7 @@ public class Main {
     public static String dataServerFolderCrc = "";
     public static String dataVer = "";
     public static String dateVer = "";
+    public static String storyAdjustIds = "";
     public static String animalName = "";
     public static byte[] key;
     public static byte[] iv;
@@ -314,6 +315,22 @@ public class Main {
                         }
 
                         System.out.println("开始执行任务！");
+                        String mstGachaStoryAdjust = new GetRequest().sendGet("https://raw.githubusercontent.com/xiaoheimaoo/FGOData/master/gamedata/mstGachaStoryAdjust.json");
+                        JSONArray mstGachaStoryAdjustjson = JSONArray.parseArray(mstGachaStoryAdjust);
+                        for(int i=0;i<mstGachaStoryAdjustjson.size();i++){
+                            if(mstGachaStoryAdjustjson.getJSONObject(i).getString("gachaId").equals(gachaIdText.getText())){
+                                if(storyAdjustIds.equals("")){
+                                    storyAdjustIds = mstGachaStoryAdjustjson.getJSONObject(i).getString("adjustId");
+                                }else{
+                                    storyAdjustIds = storyAdjustIds+","+mstGachaStoryAdjustjson.getJSONObject(i).getString("adjustId");
+                                }
+                            }
+                        }
+                        if(storyAdjustIds.equals("")){
+                            storyAdjustIds = "[]";
+                        }else{
+                            storyAdjustIds = "["+storyAdjustIds+"]";
+                        }
                         (new Thread(() -> {
                             start(poolSizeJComboBox.getSelectedItem().toString(), gachaIdText.getText(), svtIdText.getText(), typeJComboBox.getSelectedItem().toString(), numJComboBox.getSelectedItem().toString());
                         })).start();
