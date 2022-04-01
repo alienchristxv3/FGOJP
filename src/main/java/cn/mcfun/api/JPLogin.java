@@ -104,6 +104,9 @@ public class JPLogin {
                 }
             }
             JSONArray userSvt = jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userSvt");
+            if (userSvt == null) {
+                userSvt = jsonObject.getJSONObject("cache").getJSONObject("replaced").getJSONArray("userSvt");
+            }
             Map<String, Integer> svt = new HashMap();
             SellSvtName sell = new SellSvtName();
             JSONArray sellData = new JSONArray();
