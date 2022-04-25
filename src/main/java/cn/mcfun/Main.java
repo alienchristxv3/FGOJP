@@ -315,7 +315,8 @@ public class Main {
                         }
 
                         System.out.println("开始执行任务！");
-                        String mstGachaStoryAdjust = new GetRequest().sendGet("https://raw.githubusercontent.com/xiaoheimaoo/FGOData/master/gamedata/mstGachaStoryAdjust.json");
+                        String purge = new GetRequest().sendGet("https://purge.jsdelivr.net/gh/xiaoheimaoo/FGOData/gamedata/mstGachaStoryAdjust.json");
+                        String mstGachaStoryAdjust = new GetRequest().sendGet("https://cdn.jsdelivr.net/gh/xiaoheimaoo/FGOData/gamedata/mstGachaStoryAdjust.json");
                         JSONArray mstGachaStoryAdjustjson = JSONArray.parseArray(mstGachaStoryAdjust);
                         for(int i=0;i<mstGachaStoryAdjustjson.size();i++){
                             if(mstGachaStoryAdjustjson.getJSONObject(i).getString("gachaId").equals(gachaIdText.getText())){
