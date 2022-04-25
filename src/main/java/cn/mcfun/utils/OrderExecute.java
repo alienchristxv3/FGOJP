@@ -73,7 +73,7 @@ public class OrderExecute implements Runnable {
         conn.close();
         ps.close();
         String[] arr = new FollowerList().followerlist1("93000001","3",userInfo);
-        new Battle().battlesetup(userInfo.getActiveDeckId(), userInfo.getUserEquipId(), "93000001","3",arr[0],arr[2],arr[1],userInfo);
+        new Battle().battlesetup(userInfo.getActiveDeckId(), userInfo.getUserEquipId(), "93000001","3",arr[0],arr[3],arr[2],arr[1],userInfo);
 
 */
 
