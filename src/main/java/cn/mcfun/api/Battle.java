@@ -65,7 +65,7 @@ public class Battle {
 
     }
 
-    public void battlesetup(String activeDeckId, String userEquipId, String questId, String questPhase, String followerId, String followerClassId, String followerType, UserInfo userInfo) throws SQLException {
+    public void battlesetup(String activeDeckId, String userEquipId, String questId, String questPhase, String followerId, String followerClassId,String followerSupportDeckId, String followerType, UserInfo userInfo) throws SQLException {
         String lastAccessTime = String.valueOf(System.currentTimeMillis() / 1000L);
         List<BasicNameValuePair> params = new ArrayList();
         params.add(new BasicNameValuePair("activeDeckId", activeDeckId));
@@ -82,6 +82,7 @@ public class Battle {
         params.add(new BasicNameValuePair("questSelect", "0"));
         params.add(new BasicNameValuePair("followerType", followerType));
         params.add(new BasicNameValuePair("followerRandomLimitCount", "0"));
+        params.add(new BasicNameValuePair("followerSupportDeckId", followerSupportDeckId));
         params.add(new BasicNameValuePair("userId", userInfo.getUserId()));
         params.add(new BasicNameValuePair("authKey", userInfo.getAuthKey()));
         params.add(new BasicNameValuePair("appVer", Main.appVer));
