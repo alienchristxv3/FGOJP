@@ -20,7 +20,7 @@ import org.apache.http.message.BasicNameValuePair;
 public class FollowerList {
     public FollowerList() {
     }
-
+    //通常助战
     public String[] followerlist1(String questId, String questPhase, UserInfo userInfo) throws SQLException {
         String lastAccessTime = String.valueOf(System.currentTimeMillis() / 1000L);
         List<BasicNameValuePair> params = new ArrayList();
@@ -54,37 +54,41 @@ public class FollowerList {
             String followerId = null;
             String type = null;
             String followerClassId = null;
-
-            label47:
-            for(int m = 0; m < jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").size(); ++m) {
-                JSONArray followerInfo = jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").getJSONObject(m).getJSONArray("followerInfo");
-
-                for(int i = 0; i < followerInfo.size(); ++i) {
-                    if (followerInfo.getJSONObject(i).getString("type").equals("1") || followerInfo.getJSONObject(i).getString("type").equals("2")) {
+            String supportDeckId = null;
+            JSONArray followerInfo;
+            flag:
+            for (int m = 0; m < jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").size(); m++) {
+                followerInfo = jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").getJSONObject(m).getJSONArray("followerInfo");
+                for (int i = 0; i < followerInfo.size(); i++) {
+                    if (followerInfo.getJSONObject(i).getString("type").equals("1") ||
+                            followerInfo.getJSONObject(i).getString("type").equals("2")) {
                         followerId = followerInfo.getJSONObject(i).getString("userId");
                         type = followerInfo.getJSONObject(i).getString("type");
-
-                        for(int j = 0; j < followerInfo.getJSONObject(i).getJSONArray("userSvtLeaderHash").size(); ++j) {
+                        for (int j = 0; j < followerInfo.getJSONObject(i).getJSONArray("userSvtLeaderHash").size(); j++) {
                             if (!followerInfo.getJSONObject(i).getJSONArray("userSvtLeaderHash").getJSONObject(j).getString("userSvtId").equals("0")) {
                                 followerClassId = followerInfo.getJSONObject(i).getJSONArray("userSvtLeaderHash").getJSONObject(j).getString("classId");
-                                break label47;
+                                supportDeckId = followerInfo.getJSONObject(i).getJSONArray("userSvtLeaderHash").getJSONObject(j).getString("supportDeckId");
+                                break flag;
                             }
                         }
                     }
                 }
             }
-
             if (type.equals("1")) {
                 type = "1";
             } else if (type.equals("2")) {
                 type = "0";
             }
-
-            String[] arr = new String[]{followerId, type, followerClassId};
+            String[] arr = {followerId, type, followerClassId, supportDeckId};
+            try {
+                Thread.currentThread().sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return arr;
         }
     }
-
+    //活动助战
     public String[] followerlist2(String questId, String questPhase, UserInfo userInfo) {
         String lastAccessTime = String.valueOf(System.currentTimeMillis() / 1000L);
         List<BasicNameValuePair> params = new ArrayList();
@@ -111,20 +115,21 @@ public class FollowerList {
             String followerId = null;
             String type = null;
             String followerClassId = null;
-
-            label47:
-            for(int m = 0; m < jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").size(); ++m) {
-                JSONArray followerInfo = jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").getJSONObject(m).getJSONArray("followerInfo");
-
-                for(int i = 0; i < followerInfo.size(); ++i) {
-                    if (followerInfo.getJSONObject(i).getString("type").equals("1") || followerInfo.getJSONObject(i).getString("type").equals("2")) {
+            String supportDeckId = null;
+            JSONArray followerInfo;
+            flag:
+            for (int m = 0; m < jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").size(); m++) {
+                followerInfo = jsonObject.getJSONObject("cache").getJSONObject("updated").getJSONArray("userFollower").getJSONObject(m).getJSONArray("followerInfo");
+                for (int i = 0; i < followerInfo.size(); i++) {
+                    if (followerInfo.getJSONObject(i).getString("type").equals("1") ||
+                            followerInfo.getJSONObject(i).getString("type").equals("2")) {
                         followerId = followerInfo.getJSONObject(i).getString("userId");
                         type = followerInfo.getJSONObject(i).getString("type");
-
-                        for(int j = 0; j < followerInfo.getJSONObject(i).getJSONArray("eventUserSvtLeaderHash").size(); ++j) {
+                        for (int j = 0; j < followerInfo.getJSONObject(i).getJSONArray("eventUserSvtLeaderHash").size(); j++) {
                             if (!followerInfo.getJSONObject(i).getJSONArray("eventUserSvtLeaderHash").getJSONObject(j).getString("userSvtId").equals("0")) {
                                 followerClassId = followerInfo.getJSONObject(i).getJSONArray("eventUserSvtLeaderHash").getJSONObject(j).getString("classId");
-                                break label47;
+                                supportDeckId = followerInfo.getJSONObject(i).getJSONArray("eventUserSvtLeaderHash").getJSONObject(j).getString("supportDeckId");
+                                break flag;
                             }
                         }
                     }
@@ -136,8 +141,12 @@ public class FollowerList {
             } else if (type.equals("2")) {
                 type = "0";
             }
-
-            String[] arr = new String[]{followerId, type, followerClassId};
+            String[] arr = {followerId, type, followerClassId, supportDeckId};
+            try {
+                Thread.currentThread().sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return arr;
         }
     }
